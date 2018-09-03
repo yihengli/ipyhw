@@ -11,6 +11,7 @@ class MdFormatter():
     def clear(self, body):
         body = self._kill_multi_lines(body)
         body = self._table_border(body)
+        body = self._table_styles(body)
         return body
 
     @staticmethod
@@ -20,6 +21,24 @@ class MdFormatter():
     @staticmethod
     def _table_border(body):
         return re.sub(r'border="1"', r'border="0"', body)
+
+    @staticmethod
+    def _table_styles(body):
+        styles = """
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>"""
+        return re.sub(styles, '', body)
 
 
 class PostProcesser():
