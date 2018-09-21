@@ -1,9 +1,13 @@
+import os
 import click
 import re
 import nbformat
-import nbconvert
 from nbconvert.exporters import MarkdownExporter
 from nbconvert.writers import FilesWriter
+
+
+FOLDER = os.path.dirname(os.path.realpath(__file__))
+HIDE_TEMPLATE = os.path.join(FOLDER, 'assets', 'hide.tpl')
 
 
 class MdFormatter():
@@ -55,7 +59,7 @@ class PostProcesser():
 @click.option('-o', '--output', default='', help='The output folder')
 @click.option('-n', '--name', default='Homework', help='Output file name')
 def main(input, output, name):
-    exporter = MarkdownExporter(template_file='./hide.tpl')
+    exporter = MarkdownExporter(template_file=HIDE_TEMPLATE)
     writer = FilesWriter()
 
     with open(input, 'rb') as f:
